@@ -1,8 +1,8 @@
 import logging
 
 class Logger:
-    def __init__(self,logName):
-        self.logger = logging.getLogger(logName)
+    def __init__(self):
+        self.logger = logging.getLogger()
         self.logger.setLevel(logging.INFO)
         fh = logging.FileHandler("log.txt",'w')
         fh.setLevel(logging.INFO)
