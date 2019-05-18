@@ -1,0 +1,2 @@
+2019-05-18 20:42:48,768 - C:/develop/project/python/setLesson/main.py[line:33] - INFO: 访问课程安排地址：https://ke.qq.com/agency/publish/index.html?cid=254956&term_id=100481009&cmd=p
+2019-05-18 20:42:57,418 - C:/develop/project/python/setLesson/main.py[line:16] - INFO: set Cookie in ./cookie/Cookie.txt
