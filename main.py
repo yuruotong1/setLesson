@@ -27,9 +27,11 @@ class Test(unittest.TestCase):
         logging.info("执行完所有test")
 
         #cls.driver.quit()
-    def test_01(cls):
-        print(cls.driver.title)
+    def test_01(self):
         logging.info("进行入test_01")
+        js2 = "var q=document.querySelector('#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(1) > div.ct-show > a').click()"
+        js3='var q=document.querySelector("#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(1) > div.ct-edit > div > div.f-dates > i").click()'
+        self.driver.execute_script(js3)
 
     def test_02(self):
         logging.info("进行入test_02")
