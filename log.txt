@@ -1,3 +1,9 @@
-2019-05-21 10:33:43,430 - C:\develop\project\python\setLesson\lesson.py[line:35] - INFO: 上课节数是:9
-2019-05-21 10:33:43,430 - C:/develop/project/python/setLesson/main.py[line:49] - INFO: 进行入test_02
-2019-05-21 10:33:43,430 - C:/develop/project/python/setLesson/main.py[line:28] - INFO: 执行完所有test
+2019-05-21 15:54:35,657 - C:\develop\project\python\setLesson\lesson.py[line:17] - INFO: 设置上课时间：2020-6-22
+2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:2
+2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:6
+2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:49] - INFO: 本周总共上课节数为：8
+2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:13] - INFO: 课程总数是：166
+2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:2
+2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:6
+2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:49] - INFO: 本周总共上课节数为：8
+2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:67] - INFO: 总共要上：20.75周
