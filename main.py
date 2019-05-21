@@ -2,6 +2,7 @@
 import logger
 import logging
 import mycookie
+import lesson
 from selenium import webdriver
 import unittest
 from selenium.webdriver.chrome.options import Options
@@ -28,10 +29,21 @@ class Test(unittest.TestCase):
 
         #cls.driver.quit()
     def test_01(self):
-        logging.info("进行入test_01")
-        js2 = "var q=document.querySelector('#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(1) > div.ct-show > a').click()"
-        js3='var q=document.querySelector("#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(1) > div.ct-edit > div > div.f-dates > i").click()'
-        self.driver.execute_script(js3)
+        # 获取课程总数
+        #number = lesson.Lesson(self.driver).number()
+        # 计算出第几周，每周上两节课
+        #week = number
+        # 查看第几周，星期几对应的日期
+        #print(time.strptime('2019-1-1', '%Y-%U-%w').tm_mon)
+        # 输入上课时间：先清空内容再输入
+        #self.driver.find_element_by_xpath('//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[166]/div[2]/div/div[1]/input').clear()
+        #self.driver.find_element_by_xpath('//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[166]/div[2]/div/div[1]/input').send_keys("2019-8-14")
+        #点击课表的修改按钮
+        #js4= 'var q=document.querySelector("#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(2) > div.ct-edit > div > div.f-dates > i").click()'
+        #self.driver.execute_script(js4)
+        lesson.Lesson(self.driver).weekArrangement({'星期五':('13:00','17:30')})
+
+
 
     def test_02(self):
         logging.info("进行入test_02")

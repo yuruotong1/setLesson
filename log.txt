@@ -1,3 +1,3 @@
-2019-05-19 10:57:40,143 - C:/develop/project/python/setLesson/main.py[line:31] - INFO: 进行入test_01
-2019-05-19 10:57:40,211 - C:/develop/project/python/setLesson/main.py[line:37] - INFO: 进行入test_02
-2019-05-19 10:57:40,211 - C:/develop/project/python/setLesson/main.py[line:27] - INFO: 执行完所有test
+2019-05-21 10:33:43,430 - C:\develop\project\python\setLesson\lesson.py[line:35] - INFO: 上课节数是:9
+2019-05-21 10:33:43,430 - C:/develop/project/python/setLesson/main.py[line:49] - INFO: 进行入test_02
+2019-05-21 10:33:43,430 - C:/develop/project/python/setLesson/main.py[line:28] - INFO: 执行完所有test
