@@ -26,14 +26,12 @@ class Test(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         pass
+
     def test_01(self):
-
-
         myLesson = lesson.Lesson(self.driver)
-        myLesson.setStartTime("2020-6-22")
-        myLesson.setWeekArrangement({'星期五':('14:00','15:00'),'星期六':('15:00','18:00')})
-        myLesson.weekLessonNumber()
-        myLesson.totalWeekNumber()
+        myLesson.setStartTime("2019-7-26")
+        myLesson.setWeekArrangement({'星期5':('14:00','15:00'),'星期0':('15:00','18:00')})
+        myLesson.lessonSchedule()
 
 
 

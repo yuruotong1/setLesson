@@ -1,9 +1,13 @@
-2019-05-21 15:54:35,657 - C:\develop\project\python\setLesson\lesson.py[line:17] - INFO: 设置上课时间：2020-6-22
-2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:2
-2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:6
-2019-05-21 15:54:40,249 - C:\develop\project\python\setLesson\lesson.py[line:49] - INFO: 本周总共上课节数为：8
-2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:13] - INFO: 课程总数是：166
-2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:2
-2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:62] - INFO: 今天上课节数是:6
-2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:49] - INFO: 本周总共上课节数为：8
-2019-05-21 15:54:40,530 - C:\develop\project\python\setLesson\lesson.py[line:67] - INFO: 总共要上：20.75周
+2019-05-22 15:58:00,193 - C:\develop\project\python\setLesson\lesson.py[line:19] - INFO: 设置上课时间：2019-7-26
+2019-05-22 15:58:07,889 - C:\develop\project\python\setLesson\lesson.py[line:15] - INFO: 课程总数是：166
+2019-05-22 15:58:07,889 - C:\develop\project\python\setLesson\lesson.py[line:60] - INFO: 今天上课节数是:2
+2019-05-22 15:58:07,889 - C:\develop\project\python\setLesson\lesson.py[line:60] - INFO: 今天上课节数是:6
+2019-05-22 15:58:07,890 - C:\develop\project\python\setLesson\lesson.py[line:47] - INFO: 本周总共上课节数为：8
+2019-05-22 15:58:07,890 - C:\develop\project\python\setLesson\lesson.py[line:66] - INFO: 总共要上：21周
+2019-05-22 15:58:07,890 - C:\develop\project\python\setLesson\lesson.py[line:60] - INFO: 今天上课节数是:2
+2019-05-22 15:58:08,070 - C:\develop\project\python\setLesson\lesson.py[line:15] - INFO: 课程总数是：166
+2019-05-22 15:58:08,377 - C:\develop\project\python\setLesson\lesson.py[line:101] - INFO: currentLesson = 1
+2019-05-22 15:58:09,656 - C:\develop\project\python\setLesson\lesson.py[line:112] - INFO: 下课时间：14:30
+2019-05-22 15:58:10,947 - C:\develop\project\python\setLesson\lesson.py[line:15] - INFO: 课程总数是：166
+2019-05-22 15:58:11,256 - C:\develop\project\python\setLesson\lesson.py[line:101] - INFO: currentLesson = 2
+2019-05-22 15:58:12,266 - C:\develop\project\python\setLesson\lesson.py[line:112] - INFO: 下课时间：15:00
