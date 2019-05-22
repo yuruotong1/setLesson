@@ -3,6 +3,7 @@ from datetime import datetime
 from datetime import timedelta
 import logging
 import math
+from selenium.webdriver.support.wait import WebDriverWait
 class Lesson:
     def __init__(self,driver):
         self.driver = driver
@@ -73,9 +74,40 @@ class Lesson:
             nextSchoolTime += oneday
 
         return nextSchoolTime
-
-    def 
-
+    def clickEdit(self,currentLesson):
+        # 点击编辑前要前确认上一个按钮没有完成按钮
+        if currentLesson != 1:
+            WebDriverWait(self.driver, 3).until(
+                lambda driver: self.driver.find_element_by_xpath(
+                    '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[1]/a' % (currentLesson - 1)))
+        js4 = 'var q= document.querySelector("#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(%s) > div.ct-show > a").click()' % (
+            currentLesson)
+        self.driver.execute_script(js4)
+    def setSchoolTimeYearAndMonth(self,currentLesson,lastSchoolTime):
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[1]/input' % (
+                currentLesson)).clear()
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[1]/input' % (
+                currentLesson)).send_keys(lastSchoolTime.strftime("%Y-%m-%d"))
+    def setSchoolTimeHourAndMin(self,currentLesson,currentSchoolTime):
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[1]/div[1]/input' % (
+                currentLesson)).clear()
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[1]/div[1]/input' % (
+                currentLesson)).send_keys(currentSchoolTime.strftime("%H:%M"))
+    def setQuitTimeHourAndMin(self,currentLesson,currentSchoolTime):
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[2]/div[1]/input' % (
+                currentLesson)).clear()
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[2]/div[1]/input' % (
+                currentLesson)).send_keys(currentSchoolTime.strftime("%H:%M"))
+    def clickSave(self,currentLesson):
+        self.driver.find_element_by_xpath(
+            '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/a[1]' % (currentLesson)).click()
+        self.driver
 
 
     def lessonSchedule(self):
@@ -83,47 +115,25 @@ class Lesson:
         lastSchoolTime = self.startTime
         for thisWeek in range(0,self.totalWeekNumber()):
             for week,timeTupe in self.lessonPeriod.items():
-                lastSchoolTime = self.getNextSchoolTime(lastSchoolTime)
                 currentSchoolTime = datetime.strptime(timeTupe[0], '%H:%M')
-                quittingTime = datetime.strptime(timeTupe[1], '%H:%M')
-
                 for i in range(0,self.todayLessonNumber(timeTupe[0],timeTupe[1])):
                     # 点击课表的修改按钮
                     currentLesson+=1
                     if currentLesson > self.totalLessonNumber():
                         logging.info("课程设置完毕")
                         return
-
-                    js4= 'var q= document.querySelector("#livetime_increase_0 > div.guide-bd.form.form--h > div.f-item.f-item-livetask > div > ul > li:nth-child(%s) > div.ct-show > a").click()'%(currentLesson)
-                    self.driver.execute_script(js4)
+                    self.clickEdit(currentLesson)
                     # 输入上课年-月-日：先清空内容再输入
-                    self.driver.find_element_by_xpath('//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[1]/input'%(currentLesson)).clear()
-                    logging.info("currentLesson = "+str(currentLesson))
-                    self.driver.find_element_by_xpath('//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[1]/input'%(currentLesson)).send_keys( lastSchoolTime.strftime("%Y-%m-%d"))
+                    self.setSchoolTimeYearAndMonth(currentLesson,lastSchoolTime)
                     # 设置上课时间
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[1]/div[1]/input' % (
-                            currentLesson)).clear()
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[1]/div[1]/input'%(
-                            currentLesson)).send_keys(currentSchoolTime.strftime("%H:%M"))
+                    self.setSchoolTimeHourAndMin(currentLesson,currentSchoolTime)
+                    # 每节课为30分钟
                     currentSchoolTime += timedelta(minutes=30)
                     # 设置下课时间
-                    logging.info("下课时间："+currentSchoolTime.strftime("%H:%M"))
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[2]/div[1]/input' % (
-                            currentLesson)).clear()
-                    self.driver.find_element_by_xpath(
-                        '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/div/div[2]/div[2]/div[1]/input' % (
-                            currentLesson)).send_keys(currentSchoolTime.strftime("%H:%M"))
+                    self.setQuitTimeHourAndMin(currentLesson,currentSchoolTime)
                     #点击保存
-                    self.driver.find_element_by_xpath('//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/a[1]'%(currentLesson)).click()
-
-
-
-
-
-
+                    self.clickSave(currentLesson)
+                lastSchoolTime = self.getNextSchoolTime(lastSchoolTime)
 
 
 
