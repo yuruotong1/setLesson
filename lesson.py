@@ -15,6 +15,7 @@ class Lesson:
         logging.info("课程总数是：%s"%(lessonNumber))
         return lessonNumber
     # setStartTIme设置直播开始日期，格式：年-月-日。比如2019-5-19
+    # todo 可以根据第一节课的上课时间来定
     def setStartTime(self,startTime):
         logging.info("设置上课时间：%s" % (startTime))
         if type(startTime) !=datetime:
@@ -37,49 +38,11 @@ class Lesson:
         findStartTime.click()
     def getStartTime(self):
         return self.startTime
-    # lessonPeriod 以字典形式给出，{'星期几':'上课时间',...},0代表星期日，6代表星期6。比如{'星期5':('14:00','15:00'),'星期0':('15:00','18:00')}
-    def setWeekArrangement(self,lessonPeriod):
-        self.lessonPeriod = lessonPeriod
 
-    # 设置一周上几节课
-    def weekLessonNumber(self,):
-        lessonNumber = 0
-        for week, timeTuple in self.lessonPeriod.items():
-            # timeTuple[0]是上课时间，timeTuple[1]是下课时间
-            lessonNumber +=self.todayLessonNumber(timeTuple[0], timeTuple[1])
-        logging.info("本周总共上课节数为：%s"%(lessonNumber))
-        return lessonNumber
-
-
-    # 计算今天上课数
-    def todayLessonNumber(self,schoolTime,quittingTime):
-        schoolTime = datetime.strptime(schoolTime, '%H:%M')
-        quittingTime = datetime.strptime(quittingTime, '%H:%M')
-        durationTime = quittingTime - schoolTime
-        # 每节课的时间是30分钟，即1800秒
-        perLessonTime = 1800
-        # 相除可以得到每天上几节课
-        lessonNumber = int(durationTime.seconds / perLessonTime)
-        logging.info("今天上课节数是:%s"%(lessonNumber))
-        return lessonNumber
-    # 计算总共要上几周
-    def totalWeekNumber(self):
-        # 向上取整
-        weekNumber = math.ceil(self.totalLessonNumber()/self.weekLessonNumber())
-        logging.info("总共要上：%s周"%(weekNumber))
-        return weekNumber
-
-    def getNextSchoolTime(self,lastSchoolTime):
-        oneday = timedelta(days=1)
-        nextSchoolTime = lastSchoolTime + oneday
-        while "星期"+nextSchoolTime.strftime("%w") not in self.lessonPeriod:
-            nextSchoolTime += oneday
-
-        return nextSchoolTime
     # firstLessonCall 的作用是，调课时，要调的课通常不是第一节课，并且上一节课存在但没有编辑按钮（因为已经上过了）
     def clickEdit(self,currentLesson,firstLessonCall):
         # 点击编辑前要前确认上一个按钮没有完成按钮
-        if currentLesson != 1 and firstLessonCall ==False:
+        if currentLesson != 1 :
             WebDriverWait(self.driver, 3).until(
                 lambda driver: self.driver.find_element_by_xpath(
                     '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[1]/a' % (currentLesson - 1)))
@@ -111,60 +74,27 @@ class Lesson:
         self.driver.find_element_by_xpath(
             '//*[@id="livetime_increase_0"]/div[2]/div[2]/div/ul/li[%s]/div[2]/a[1]' % (currentLesson)).click()
         self.driver
+    # currentLesson是课程号，yearAndMonth上课的年月日Y-M-D，schoolTime上课时间H:M，quitTime下课时间H:M
+    def setLessonTime(self,currentLesson,yearAndMonth,schoolTime,quitTime):
 
-    def setLessonTime(self,currentLesson,currentSchoolTime,lastSchoolTime,firstLessonCall=False):
-
-        self.clickEdit(currentLesson,firstLessonCall)
-        # 输入上课年-月-日：先清空内容再输入
-        self.setSchoolTimeYearAndMonth(currentLesson, lastSchoolTime)
+        self.clickEdit(currentLesson)
+        # 输入上课年-月-日
+        self.setSchoolTimeYearAndMonth(currentLesson, yearAndMonth)
         # 设置上课时间
-        self.setSchoolTimeHourAndMin(currentLesson, currentSchoolTime)
+        self.setSchoolTimeHourAndMin(currentLesson, schoolTime)
 
         # 设置下课时间
-        self.setQuitTimeHourAndMin(currentLesson, currentSchoolTime + timedelta(minutes=30))
+        self.setQuitTimeHourAndMin(currentLesson, quitTime)
         # 点击保存
         self.clickSave(currentLesson)
 
 
-
-    def lessonSchedule(self,currentLesson=0):
-        lastSchoolTime = self.startTime
-        for thisWeek in range(0,self.totalWeekNumber()):
-            for week,timeTupe in self.lessonPeriod.items():
-                currentSchoolTime = datetime.strptime(timeTupe[0], '%H:%M')
-                for i in range(0,self.todayLessonNumber(timeTupe[0],timeTupe[1])):
-                    # 点击课表的修改按钮
-                    currentLesson+=1
-                    if currentLesson > self.totalLessonNumber():
-                        logging.info("课程设置完毕")
-                        return
-                    self.setLessonTime(currentLesson,currentSchoolTime,lastSchoolTime)
-                    # 每节课为30分钟
-                    currentSchoolTime += timedelta(minutes=30)
-                lastSchoolTime = self.getNextSchoolTime(lastSchoolTime)
-
-    # changedLesson以字典形式给出，{'课程':'19','日期':'2019-10-9','时间':('5:00','8:00')}，表示把第19节课更改到2019-10-9，5:00开始上课
-    def setFirstLesson(self, changedLesson):
-        currentLesson = int(changedLesson['课程'])
-        lastSchoolTime = datetime.strptime(changedLesson['日期'], '%Y-%m-%d')
-        currentSchoolTime = datetime.strptime(changedLesson['时间'][0], '%H:%M')
-        for i in range(0, self.todayLessonNumber(changedLesson['时间'][0], changedLesson['时间'][1])):
-            if currentLesson > self.totalLessonNumber():
-                logging.info("课程设置完毕")
-                return
-            # True发生在第一次调课
-            self.setLessonTime(currentLesson,currentSchoolTime,lastSchoolTime,True)
+    def adjustmentLesson(self):
+        currentLesson = 0
+        while(currentLesson != self.totalLessonNumber()):
+            pass
+            # todo 读取yaml，根据yaml的时间来调用setLessonTime函数安排课程
             currentLesson += 1
-            currentSchoolTime += timedelta(minutes=30)
-
-        return self.getNextSchoolTime(lastSchoolTime),currentLesson-1
-
-    def adjustmentLesson(self, changedLesson):
-        self.setStartTime(changedLesson['日期'])
-        nextTimeAndCurrentLesson = self.setFirstLesson(changedLesson)
-        self.startTime = nextTimeAndCurrentLesson[0]
-        currentLesson = nextTimeAndCurrentLesson[1]
-        self.lessonSchedule(currentLesson)
 
 
 

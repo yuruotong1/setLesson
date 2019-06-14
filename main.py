@@ -29,10 +29,8 @@ class Test(unittest.TestCase):
 
     def test_01(self):
         myLesson = lesson.Lesson(self.driver)
-        #myLesson.setStartTime("2019-7-26")
-        myLesson.setWeekArrangement({'星期5':('14:00','15:00'),'星期0':('15:00','18:00'),'星期1':('14:00','15:00')})
-       # myLesson.lessonSchedule()
-        myLesson.adjustmentLesson({'课程':'38','日期':'2019-5-25','时间':('5:00','6:00')})
+        myLesson.setStartTime("2019-7-26")
+        #myLesson.adjustmentLesson()
 
 
 
