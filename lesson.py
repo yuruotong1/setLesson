@@ -39,8 +39,8 @@ class Lesson:
     def getStartTime(self):
         return self.startTime
 
-    # firstLessonCall 的作用是，调课时，要调的课通常不是第一节课，并且上一节课存在但没有编辑按钮（因为已经上过了）
-    def clickEdit(self,currentLesson,firstLessonCall):
+
+    def clickEdit(self,currentLesson):
         # 点击编辑前要前确认上一个按钮没有完成按钮
         if currentLesson != 1 :
             WebDriverWait(self.driver, 3).until(
